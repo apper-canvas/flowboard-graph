@@ -4,6 +4,7 @@ import ApperIcon from '@/components/ApperIcon';
 import BaseModal from '@/components/atoms/BaseModal';
 import Button from '@/components/atoms/Button';
 import Heading from '@/components/atoms/Heading';
+import Label from '@/components/atoms/Label';
 import FormField from '@/components/molecules/FormField';
 import Paragraph from '@/components/atoms/Paragraph';
 
