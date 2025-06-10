@@ -1,0 +1,78 @@
+[
+  {
+    "id": "1",
+    "name": "Project Alpha",
+    "description": "Main development project for the new product launch",
+    "columns": [
+      {
+        "id": "todo",
+        "title": "To Do",
+        "position": 0,
+        "taskIds": ["1", "2"],
+        "color": "#94a3b8"
+      },
+      {
+        "id": "progress",
+        "title": "In Progress",
+        "position": 1,
+        "taskIds": ["3", "4"],
+        "color": "#3b82f6"
+      },
+      {
+        "id": "review",
+        "title": "Review",
+        "position": 2,
+        "taskIds": ["5"],
+        "color": "#f59e0b"
+      },
+      {
+        "id": "done",
+        "title": "Done",
+        "position": 3,
+        "taskIds": ["6", "7"],
+        "color": "#10b981"
+      }
+    ],
+    "members": ["user1", "user2", "user3", "user4"],
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-20T14:30:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Project Beta",
+    "description": "Secondary project for feature enhancements",
+    "columns": [
+      {
+        "id": "backlog",
+        "title": "Backlog",
+        "position": 0,
+        "taskIds": [],
+        "color": "#6b7280"
+      },
+      {
+        "id": "todo-beta",
+        "title": "To Do",
+        "position": 1,
+        "taskIds": [],
+        "color": "#94a3b8"
+      },
+      {
+        "id": "progress-beta",
+        "title": "In Progress",
+        "position": 2,
+        "taskIds": [],
+        "color": "#3b82f6"
+      },
+      {
+        "id": "done-beta",
+        "title": "Done",
+        "position": 3,
+        "taskIds": [],
+        "color": "#10b981"
+      }
+    ],
+    "members": ["user2", "user3"],
+    "createdAt": "2024-01-18T09:00:00Z",
+    "updatedAt": "2024-01-22T11:15:00Z"
+  }
+]
