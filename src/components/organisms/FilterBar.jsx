@@ -1,34 +1,39 @@
-import { motion } from 'framer-motion'
-import ApperIcon from './ApperIcon'
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import ApperIcon from '@/components/ApperIcon';
+import Select from '@/components/atoms/Select';
+import FilterChip from '@/components/molecules/FilterChip';
+import Button from '@/components/atoms/Button';
+import Paragraph from '@/components/atoms/Paragraph';
 
 const FilterBar = ({ filters, onFiltersChange }) => {
   const handleFilterChange = (key, value) => {
     onFiltersChange(prev => ({
       ...prev,
       [key]: value
-    }))
-  }
+    }));
+  };
 
   const clearFilters = () => {
     onFiltersChange({
       assignee: '',
       priority: '',
       dueDate: ''
-    })
-  }
+    });
+  };
 
-  const hasActiveFilters = Object.values(filters).some(value => value)
+  const hasActiveFilters = Object.values(filters).some(value => value);
 
   return (
     <div className="flex-shrink-0 px-6 py-3 bg-white border-b border-surface-200">
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-2">
           <ApperIcon name="Filter" className="w-4 h-4 text-surface-500" />
-          <span className="text-sm font-medium text-surface-700">Filters:</span>
+          <Paragraph className="text-sm font-medium text-surface-700 mb-0">Filters:</Paragraph>
         </div>
 
         {/* Priority Filter */}
-        <select
+        <Select
           value={filters.priority}
           onChange={(e) => handleFilterChange('priority', e.target.value)}
           className="px-3 py-1.5 text-sm border border-surface-300 rounded-lg focus:outline-none focus:border-secondary bg-white"
@@ -37,10 +42,10 @@ const FilterBar = ({ filters, onFiltersChange }) => {
           <option value="high">High Priority</option>
           <option value="medium">Medium Priority</option>
           <option value="low">Low Priority</option>
-        </select>
+        </Select>
 
         {/* Due Date Filter */}
-        <select
+        <Select
           value={filters.dueDate}
           onChange={(e) => handleFilterChange('dueDate', e.target.value)}
           className="px-3 py-1.5 text-sm border border-surface-300 rounded-lg focus:outline-none focus:border-secondary bg-white"
@@ -50,10 +55,10 @@ const FilterBar = ({ filters, onFiltersChange }) => {
           <option value="today">Due Today</option>
           <option value="tomorrow">Due Tomorrow</option>
           <option value="week">Due This Week</option>
-        </select>
+        </Select>
 
         {/* Assignee Filter */}
-        <select
+        <Select
           value={filters.assignee}
           onChange={(e) => handleFilterChange('assignee', e.target.value)}
           className="px-3 py-1.5 text-sm border border-surface-300 rounded-lg focus:outline-none focus:border-secondary bg-white"
@@ -62,11 +67,11 @@ const FilterBar = ({ filters, onFiltersChange }) => {
           <option value="user1">John Smith</option>
           <option value="user2">Sarah Johnson</option>
           <option value="user3">Mike Chen</option>
-        </select>
+        </Select>
 
         {/* Clear Filters */}
         {hasActiveFilters && (
-          <motion.button
+          <Button
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             onClick={clearFilters}
@@ -74,50 +79,64 @@ const FilterBar = ({ filters, onFiltersChange }) => {
           >
             <ApperIcon name="X" className="w-3 h-3" />
             <span>Clear</span>
-          </motion.button>
+          </Button>
         )}
       </div>
 
       {/* Active Filter Indicators */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap gap-2 mt-2">
-          {filters.priority && (
-            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-              Priority: {filters.priority}
-              <button
-                onClick={() => handleFilterChange('priority', '')}
-                className="ml-1 text-purple-600 hover:text-purple-800"
+        <AnimatePresence>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {filters.priority && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
               >
-                <ApperIcon name="X" className="w-3 h-3" />
-              </button>
-            </span>
-          )}
-          {filters.dueDate && (
-            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              Due: {filters.dueDate}
-              <button
-                onClick={() => handleFilterChange('dueDate', '')}
-                className="ml-1 text-blue-600 hover:text-blue-800"
+                <FilterChip
+                  label="Priority"
+                  value={filters.priority}
+                  onClear={() => handleFilterChange('priority', '')}
+                  bgColor="bg-purple-100"
+                  textColor="text-purple-800"
+                />
+              </motion.div>
+            )}
+            {filters.dueDate && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
               >
-                <ApperIcon name="X" className="w-3 h-3" />
-              </button>
-            </span>
-          )}
-          {filters.assignee && (
-            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              Assignee: {filters.assignee}
-              <button
-                onClick={() => handleFilterChange('assignee', '')}
-                className="ml-1 text-green-600 hover:text-green-800"
+                <FilterChip
+                  label="Due"
+                  value={filters.dueDate}
+                  onClear={() => handleFilterChange('dueDate', '')}
+                  bgColor="bg-blue-100"
+                  textColor="text-blue-800"
+                />
+              </motion.div>
+            )}
+            {filters.assignee && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
               >
-                <ApperIcon name="X" className="w-3 h-3" />
-              </button>
-            </span>
-          )}
-        </div>
+                <FilterChip
+                  label="Assignee"
+                  value={filters.assignee}
+                  onClear={() => handleFilterChange('assignee', '')}
+                  bgColor="bg-green-100"
+                  textColor="text-green-800"
+                />
+              </motion.div>
+            )}
+          </div>
+        </AnimatePresence>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default FilterBar
+export default FilterBar;

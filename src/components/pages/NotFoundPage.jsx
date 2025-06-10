@@ -1,8 +1,12 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import ApperIcon from '../components/ApperIcon'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import ApperIcon from '@/components/ApperIcon';
+import Heading from '@/components/atoms/Heading';
+import Paragraph from '@/components/atoms/Paragraph';
+import Button from '@/components/atoms/Button';
 
-const NotFound = () => {
+const NotFoundPage = () => {
   return (
     <div className="flex items-center justify-center h-full">
       <motion.div
@@ -16,11 +20,11 @@ const NotFound = () => {
         >
           <ApperIcon name="FileQuestion" className="w-24 h-24 text-surface-300 mx-auto" />
         </motion.div>
-        <h1 className="text-4xl font-heading font-bold text-surface-900 mt-6">404</h1>
-        <h2 className="text-xl font-medium text-surface-700 mt-2">Page Not Found</h2>
-        <p className="text-surface-500 mt-4 max-w-md mx-auto">
+        <Heading level={1} className="mt-6">404</Heading>
+        <Heading level={2} className="mt-2">Page Not Found</Heading>
+        <Paragraph className="mt-4 max-w-md mx-auto">
           The page you're looking for doesn't exist or has been moved.
-        </p>
+        </Paragraph>
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -36,7 +40,7 @@ const NotFound = () => {
         </motion.div>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFoundPage;

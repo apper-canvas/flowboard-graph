@@ -1,33 +1,37 @@
-import { useState } from 'react'
-import { useDroppable } from '@dnd-kit/core'
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { motion, AnimatePresence } from 'framer-motion'
-import ApperIcon from './ApperIcon'
-import TaskCard from './TaskCard'
-import QuickAddTask from './QuickAddTask'
+import React, { useState } from 'react';
+import { useDroppable } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { motion, AnimatePresence } from 'framer-motion';
+import ApperIcon from '@/components/ApperIcon';
+import TaskCard from '@/components/organisms/TaskCard';
+import QuickAddTaskForm from '@/components/organisms/QuickAddTaskForm';
+import Heading from '@/components/atoms/Heading';
+import Badge from '@/components/atoms/Badge';
+import Button from '@/components/atoms/Button';
+import Paragraph from '@/components/atoms/Paragraph';
 
 const KanbanColumn = ({ column, tasks, onTaskCreate, onTaskClick }) => {
-  const [isAddingTask, setIsAddingTask] = useState(false)
-  const { setNodeRef } = useDroppable({ id: column.id })
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const { setNodeRef } = useDroppable({ id: column.id });
 
   const handleTaskCreate = async (taskData) => {
-    await onTaskCreate(column.id, taskData)
-    setIsAddingTask(false)
-  }
+    await onTaskCreate(column.id, taskData);
+    setIsAddingTask(false);
+  };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800'
-      case 'medium': return 'bg-yellow-100 text-yellow-800'
-      case 'low': return 'bg-green-100 text-green-800'
-      default: return 'bg-surface-100 text-surface-800'
+      case 'high': return 'bg-red-100 text-red-800';
+      case 'medium': return 'bg-yellow-100 text-yellow-800';
+      case 'low': return 'bg-green-100 text-green-800';
+      default: return 'bg-surface-100 text-surface-800';
     }
-  }
+  };
 
   const tasksByPriority = tasks.reduce((acc, task) => {
-    acc[task.priority] = (acc[task.priority] || 0) + 1
-    return acc
-  }, {})
+    acc[task.priority] = (acc[task.priority] || 0) + 1;
+    return acc;
+  }, {});
 
   return (
     <div className="w-80 flex-shrink-0">
@@ -35,29 +39,29 @@ const KanbanColumn = ({ column, tasks, onTaskCreate, onTaskClick }) => {
         {/* Column Header */}
         <div className="p-4 border-b border-surface-200" style={{ backgroundColor: column.color + '20' }}>
           <div className="flex items-center justify-between mb-2">
-            <h3 className="font-medium text-surface-900">{column.title}</h3>
-            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-surface-100 text-surface-600">
+            <Heading level={4}>{column.title}</Heading>
+            <Badge bgColor="bg-surface-100" textColor="text-surface-600">
               {tasks.length}
-            </span>
+            </Badge>
           </div>
-          
+
           {/* Priority Distribution */}
           {tasks.length > 0 && (
             <div className="flex space-x-1">
               {Object.entries(tasksByPriority).map(([priority, count]) => (
-                <span
+                <Badge
                   key={priority}
-                  className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(priority)}`}
+                  className={`font-medium ${getPriorityColor(priority)}`}
                 >
                   {priority}: {count}
-                </span>
+                </Badge>
               ))}
             </div>
           )}
         </div>
 
         {/* Tasks Area */}
-        <div 
+        <div
           ref={setNodeRef}
           className="flex-1 p-4 space-y-3 overflow-y-auto min-h-0"
         >
@@ -71,8 +75,8 @@ const KanbanColumn = ({ column, tasks, onTaskCreate, onTaskClick }) => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <TaskCard 
-                    task={task} 
+                  <TaskCard
+                    task={task}
                     onClick={() => onTaskClick(task)}
                   />
                 </motion.div>
@@ -88,13 +92,13 @@ const KanbanColumn = ({ column, tasks, onTaskCreate, onTaskClick }) => {
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
               >
-                <QuickAddTask 
+                <QuickAddTaskForm
                   onSave={handleTaskCreate}
                   onCancel={() => setIsAddingTask(false)}
                 />
               </motion.div>
             ) : (
-              <motion.button
+              <Button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setIsAddingTask(true)}
@@ -102,7 +106,7 @@ const KanbanColumn = ({ column, tasks, onTaskCreate, onTaskClick }) => {
               >
                 <ApperIcon name="Plus" className="w-4 h-4" />
                 <span className="text-sm font-medium">Add task</span>
-              </motion.button>
+              </Button>
             )}
           </AnimatePresence>
 
@@ -114,14 +118,14 @@ const KanbanColumn = ({ column, tasks, onTaskCreate, onTaskClick }) => {
               className="text-center py-8"
             >
               <ApperIcon name="Package" className="w-12 h-12 text-surface-300 mx-auto mb-3" />
-              <p className="text-sm text-surface-500">No tasks yet</p>
-              <p className="text-xs text-surface-400 mt-1">Click the button above to add one</p>
+              <Paragraph className="text-sm text-surface-500">No tasks yet</Paragraph>
+              <Paragraph className="text-xs text-surface-400 mt-1">Click the button above to add one</Paragraph>
             </motion.div>
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default KanbanColumn
+export default KanbanColumn;

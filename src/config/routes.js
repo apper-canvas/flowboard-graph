@@ -1,6 +1,6 @@
-import Board from '../pages/Board';
-import Team from '../pages/Team';
-import Settings from '../pages/Settings';
+import BoardPage from '@/components/pages/BoardPage';
+import TeamPage from '@/components/pages/TeamPage';
+import SettingsPage from '@/components/pages/SettingsPage';
 
 export const routes = {
   board: {
@@ -8,21 +8,21 @@ export const routes = {
     label: 'Board',
     path: '/board',
     icon: 'Kanban',
-    component: Board
+component: BoardPage
   },
   team: {
     id: 'team',
     label: 'Team',
     path: '/team',
     icon: 'Users',
-    component: Team
+component: TeamPage
   },
   settings: {
     id: 'settings',
     label: 'Settings',
     path: '/settings',
     icon: 'Settings',
-    component: Settings
+component: SettingsPage
   }
 };
 
